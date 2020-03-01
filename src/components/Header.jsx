@@ -13,14 +13,6 @@ import { NavLink, Switch, Route } from 'react-router-dom';
 
 class Header extends React.Component {
 
-    constructor(props) {
-
-        super(props);
-    
-        this.state = {
-        };
-      }
-
     render() {
 
         /*Need to relook at this part for quantity*/
@@ -63,7 +55,7 @@ class Header extends React.Component {
 
                <Switch>
                     <Route path="/Beer" component={Beer} />
-                    <Route path="/Cart" component={Cart} />
+                    <Route path="/Cart" render={(props) => <Cart cartData={this.props.check} />} />
                     <Route path="/Liquors" component={Liquors} />
                     <Route path="/Login" component={Login} />
                     <Route path="/Profile" component={Profile} />

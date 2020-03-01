@@ -2,9 +2,6 @@ import React from 'react';
 import CartComponent from '../components/Cart';
 import '../App.css';
 
-const cart = 
-[{"id":1,"product":"Best Intentions, The (Den goda viljan)","description":"odio in hac habitasse platea","price":15,"image":"http://dummyimage.com/250x250.jpg/dddddd/000000", "units":2},
-{"id":2,"product":"Brother Orchid","description":"quam pede lobortis ligula sit","price":90,"image":"http://dummyimage.com/250x250.jpg/ff4444/ffffff", "units": 5}];
 
 class Cart extends React.Component {
 
@@ -13,7 +10,6 @@ class Cart extends React.Component {
       super(props);
   
       this.state = {
-        cart: cart,
         unitTotalQty: 0,
         unitTotalPrice: 0
       };
@@ -22,12 +18,32 @@ class Cart extends React.Component {
 
     render() {
 
-      const cartJSX = this.state.cart.map( (cart, index) => 
+      const cartJSX = this.props.cartData.cart.map( (cart, index) => 
       {
         return <CartComponent key={cart.id} {...cart} />
       });
 
-      console.log('IN CART PAGE: ' + this.props.location.state)
+      //let totalPrice = 0;
+      //let test = 0;
+
+      let priceTotal = 0;
+
+      let unitsTotal = 0;
+
+      const totalPrice = this.props.cartData.cart.forEach( (value, index) =>
+      {
+         priceTotal += (parseFloat(value.price) * value.units) ;
+
+         return priceTotal;
+      });
+
+      const totalUnits = this.props.cartData.cart.forEach( (value, index) =>
+      {
+         unitsTotal += (value.units) ;
+
+         return unitsTotal;
+      });
+
 
        return (
           <div>
@@ -35,6 +51,9 @@ class Cart extends React.Component {
              <ul>
                 {cartJSX}
              </ul>
+
+             <h3>Price Total: {priceTotal}</h3>
+             <h3>Total Units: {unitsTotal}</h3>
           </div>
        );
     }

@@ -81,7 +81,7 @@ componentWillUnmount() {
               this.state.cart.map(c => <li>{c.product} | units: {c.units} </li>)
             }
 
-            {location === '/' && 
+            {location === '/' && window.location.pathname === '/' &&
             <div className="Products row row-cols-1 row-cols-md-4 col-rows-4">{productsJSX}</div>
             }
         </div>
