@@ -1,17 +1,18 @@
 import React from 'react';
 import Products from './components/Products';
 import Header from './components/Header';
+import { withRouter } from 'react-router'
 
 //Test JSON data for now
 //Will connect to database later
 //which I will have the componentDidMount api call and set products
 //with this.setState. example of this located in job-post-react-app
 const products = 
-[{"id":1,"product":"Best Intentions, The (Den goda viljan)","description":"odio in hac habitasse platea","price":15,"image":"http://dummyimage.com/250x250.jpg/dddddd/000000"},
-{"id":289,"product":"Brother Orchid","description":"quam pede lobortis ligula sit","price":90,"image":"http://dummyimage.com/250x250.jpg/ff4444/ffffff"},
-{"id":3,"product":"Azumi 2: Death or Love","description":"amet lobortis sapien sapien non","price":99,"image":"http://dummyimage.com/250x250.jpg/cc0000/ffffff"},
-{"id":4,"product":"Romance in a Minor Key (Romanze in Moll)","description":"orci pede venenatis non sodales","price":91,"image":"http://dummyimage.com/250x250.jpg/dddddd/000000"},
-{"id":5,"product":"Docking the Boat (Att angöra en brygga)","description":"hac habitasse platea dictumst etiam","price":95,"image":"http://dummyimage.com/250x250.jpg/5fa2dd/ffffff"}]
+[{"id":1,"product":"Best Intentions, The (Den goda viljan)","description":"odio in hac habitasse platea","price":15,"image":"http://dummyimage.com/250x250.jpg/dddddd/000000", "units" : 1},
+{"id":289,"product":"Brother Orchid","description":"quam pede lobortis ligula sit","price":90,"image":"http://dummyimage.com/250x250.jpg/ff4444/ffffff","units" : 1},
+{"id":3,"product":"Azumi 2: Death or Love","description":"amet lobortis sapien sapien non","price":99,"image":"http://dummyimage.com/250x250.jpg/cc0000/ffffff","units" : 1},
+{"id":4,"product":"Romance in a Minor Key (Romanze in Moll)","description":"orci pede venenatis non sodales","price":91,"image":"http://dummyimage.com/250x250.jpg/dddddd/000000","units" : 1},
+{"id":5,"product":"Docking the Boat (Att angöra en brygga)","description":"hac habitasse platea dictumst etiam","price":95,"image":"http://dummyimage.com/250x250.jpg/5fa2dd/ffffff","units" : 1}]
 
 const cart = 
 [{"id":1,"product":"Best Intentions, The (Den goda viljan)","description":"odio in hac habitasse platea","price":15,"image":"http://dummyimage.com/250x250.jpg/dddddd/000000", "units":2},
@@ -26,19 +27,45 @@ class App extends React.Component {
       error: null,
       isLoaded: true,
       products: products, //will make this empty array [] once i connect to db,
-      cart: cart
+      cart: cart,
+      location: '/'
     };
 
     this.AddToCart=this.AddToCart.bind(this);
   }
   
-  AddToCart(e){
-    alert("works");
-    console.log(e)
+  AddToCart(item){
+
+    const existingProduct = this.state.cart.filter(p => p.id === item.id);
+
+    if(existingProduct.length > 0)
+    {
+      const removedExistingProducts = this.state.cart.filter(p => p.id !== item.id);
+      console.log('item units: ' + item.units)
+      const updatedUnitsProduct = {
+        ...existingProduct[0],
+        units: existingProduct[0].units + item.units
+      }
+
+      this.setState({
+        cart: [...removedExistingProducts, updatedUnitsProduct]
+      });
+    }
+}
+
+componentWillMount() {
+  this.unlisten = this.props.history.listen((location, action) => {
+    //console.log('You changed the page to: ' + location.pathname)
+    this.setState({location: location.pathname});
+  });
+}
+componentWillUnmount() {
+    this.unlisten();
 }
 
   render() {   
-
+    const { location } = this.state;
+    
     const productsJSX = this.state.products.map( (product, index) => 
     {
       //Passing the key and spreading the product to the products component
@@ -46,13 +73,20 @@ class App extends React.Component {
       return <Products key={product.id} {...product} onClick={() => this.AddToCart({...product})}  />
     });
 
+
     return (
         <div className="App">
             <Header check={this.state}/>
+            {
+              this.state.cart.map(c => <li>{c.product} | units: {c.units} </li>)
+            }
+
+            {location === '/' && 
             <div className="Products row row-cols-1 row-cols-md-4 col-rows-4">{productsJSX}</div>
+            }
         </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

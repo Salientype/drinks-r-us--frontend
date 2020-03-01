@@ -35,7 +35,7 @@ class Header extends React.Component {
        return (
           <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-                <a className="navbar-brand" href="#">DRINKS-R-US</a>
+                <NavLink to="/" className="navbar-brand">DRINKS-R-US</NavLink>
                 <NavLink to="/" className="nav-link text-light"> Home </NavLink>
                 <NavLink to="/Liquors" className="nav-link text-body"> Liquors </NavLink>
                 <NavLink to="/Beer" className="nav-link text-body"> Beer </NavLink>
@@ -46,7 +46,7 @@ class Header extends React.Component {
                 <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <NavLink to="/Cart" className="nav-link"> Cart ({unitTotal})</NavLink>
+                            <NavLink to={{pathname: "/Cart", state: this.props.check}} className="nav-link"> Cart ({unitTotal})</NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink to="/Register" className="nav-link"> Register </NavLink>

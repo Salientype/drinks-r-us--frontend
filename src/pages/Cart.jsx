@@ -18,6 +18,7 @@ class Cart extends React.Component {
         unitTotalPrice: 0
       };
     }
+    
 
     render() {
 
@@ -25,6 +26,8 @@ class Cart extends React.Component {
       {
         return <CartComponent key={cart.id} {...cart} />
       });
+
+      console.log('IN CART PAGE: ' + this.props.location.state)
 
        return (
           <div>
