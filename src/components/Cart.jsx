@@ -15,7 +15,10 @@ class Cart extends React.Component {
           <button type="button" className="btn btn-outline-warning bg-success">-</button>
         </div>
         <div className="col">
-          Price: {this.props.price}
+          Price Per Unit: {this.props.price}$
+        </div>
+        <div className="col">
+          Price: {this.props.price*this.props.units}$
         </div>
       </div>  
        );

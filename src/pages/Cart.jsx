@@ -50,6 +50,17 @@ class Cart extends React.Component {
              <h2>Cart Page</h2>
              <ul>
                 {cartJSX}
+                <div className="row bg-info text-white">
+                  <div className="col">                   
+                  </div>
+                  <div className="col">                  
+                  </div>
+                  <div className="col">
+                  </div>
+                  <div className="col" style={{background:'#0066ff'}}>
+                     Total Price: {priceTotal}$
+                  </div>
+               </div> 
              </ul>
 
              <h3>Price Total: {priceTotal}</h3>
