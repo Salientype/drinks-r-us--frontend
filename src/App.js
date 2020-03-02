@@ -14,9 +14,6 @@ const products =
 {"id":4,"product":"Romance in a Minor Key (Romanze in Moll)","description":"orci pede venenatis non sodales","price":91,"image":"http://dummyimage.com/250x250.jpg/dddddd/000000","units" : 1},
 {"id":5,"product":"Docking the Boat (Att angöra en brygga)","description":"hac habitasse platea dictumst etiam","price":95,"image":"http://dummyimage.com/250x250.jpg/5fa2dd/ffffff","units" : 1}]
 
-const cart = 
-[{"id":1,"product":"Best Intentions, The (Den goda viljan)","description":"odio in hac habitasse platea","price":15,"image":"http://dummyimage.com/250x250.jpg/dddddd/000000", "units":2},
-{"id":2,"product":"Brother Orchid","description":"quam pede lobortis ligula sit","price":90,"image":"http://dummyimage.com/250x250.jpg/ff4444/ffffff", "units": 5}];
 
 class App extends React.Component {
   constructor(props) {
@@ -27,7 +24,7 @@ class App extends React.Component {
       error: null,
       isLoaded: true,
       products: products, //will make this empty array [] once i connect to db,
-      cart: cart,
+      cart: [],
       location: '/'
     };
 
@@ -36,19 +33,28 @@ class App extends React.Component {
   
   AddToCart(item){
 
+    //Grab the matching item and all its associated properties
     const existingProduct = this.state.cart.filter(p => p.id === item.id);
 
+    //If the item exist, it will increment the units by 1 of the matching item
     if(existingProduct.length > 0)
     {
       const removedExistingProducts = this.state.cart.filter(p => p.id !== item.id);
-      console.log('item units: ' + item.units)
+
       const updatedUnitsProduct = {
         ...existingProduct[0],
         units: existingProduct[0].units + item.units
-      }
+      };
 
       this.setState({
         cart: [...removedExistingProducts, updatedUnitsProduct]
+      });
+    }
+    else 
+    {
+      //If item does not exist, the cart is now the cart plus the new item 
+      this.setState({
+        cart: [...this.state.cart, item]
       });
     }
 }
@@ -77,9 +83,6 @@ componentWillUnmount() {
     return (
         <div className="App">
             <Header check={this.state}/>
-            {
-              this.state.cart.map(c => <li>{c.product} | units: {c.units} </li>)
-            }
 
             {location === '/' && window.location.pathname === '/' &&
             <div className="Products row row-cols-1 row-cols-md-4 col-rows-4">{productsJSX}</div>
