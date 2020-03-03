@@ -29,9 +29,9 @@ class Header extends React.Component {
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
                 <NavLink to="/" className="navbar-brand">DRINKS-R-US</NavLink>
                 <NavLink to="/" className="nav-link text-light"> Home </NavLink>
-                <NavLink to="/Liquors" className="nav-link text-body"> Liquors </NavLink>
-                <NavLink to="/Beer" className="nav-link text-body"> Beer </NavLink>
-                <NavLink to="/Wine" className="nav-link text-body"> Wine </NavLink>
+                <NavLink to="/Liquors" className="nav-link text-light"> Liquors </NavLink>
+                <NavLink to="/Beer" className="nav-link text-light"> Beer </NavLink>
+                <NavLink to="/Wine" className="nav-link text-light"> Wine </NavLink>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>

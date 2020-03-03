@@ -1,18 +1,19 @@
 import React from 'react';
 import Products from './components/Products';
 import Header from './components/Header';
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router';
+import axios from 'axios';
 
 //Test JSON data for now
 //Will connect to database later
 //which I will have the componentDidMount api call and set products
 //with this.setState. example of this located in job-post-react-app
-const products = 
+/* const products = 
 [{"id":1,"product":"Best Intentions, The (Den goda viljan)","description":"odio in hac habitasse platea","price":15,"image":"http://dummyimage.com/250x250.jpg/dddddd/000000", "units" : 1},
 {"id":289,"product":"Brother Orchid","description":"quam pede lobortis ligula sit","price":90,"image":"http://dummyimage.com/250x250.jpg/ff4444/ffffff","units" : 1},
 {"id":3,"product":"Azumi 2: Death or Love","description":"amet lobortis sapien sapien non","price":99,"image":"http://dummyimage.com/250x250.jpg/cc0000/ffffff","units" : 1},
 {"id":4,"product":"Romance in a Minor Key (Romanze in Moll)","description":"orci pede venenatis non sodales","price":91,"image":"http://dummyimage.com/250x250.jpg/dddddd/000000","units" : 1},
-{"id":5,"product":"Docking the Boat (Att angöra en brygga)","description":"hac habitasse platea dictumst etiam","price":95,"image":"http://dummyimage.com/250x250.jpg/5fa2dd/ffffff","units" : 1}]
+{"id":5,"product":"Docking the Boat (Att angöra en brygga)","description":"hac habitasse platea dictumst etiam","price":95,"image":"http://dummyimage.com/250x250.jpg/5fa2dd/ffffff","units" : 1}] */
 
 
 class App extends React.Component {
@@ -23,7 +24,7 @@ class App extends React.Component {
     this.state = {
       error: null,
       isLoaded: true,
-      products: products, //will make this empty array [] once i connect to db,
+      products: [], //will make this empty array [] once i connect to db,
       cart: [],
       location: '/'
     };
@@ -58,6 +59,21 @@ class App extends React.Component {
       });
     }
 }
+
+  //Common for ajax calls to be triggered here. 
+  //Component life cycle method that gets called right after your component
+  //gets shown to the screen 
+  componentDidMount() 
+  {
+    axios.get("/api/products/")
+    .then( (response) => {
+
+      this.setState({ products: response.data});
+
+    }).catch((error) => {
+      console.log(error);
+    });    
+  }
 
 componentWillMount() {
   this.unlisten = this.props.history.listen((location, action) => {

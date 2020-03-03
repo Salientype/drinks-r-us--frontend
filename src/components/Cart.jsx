@@ -7,7 +7,7 @@ class Cart extends React.Component {
        return (       
         <div className="row bg-info text-white">
         <div className="col">
-          SKU: {this.props.product}
+          SKU: {this.props.name}
         </div>
         <div className="col">
           Units: {this.props.units}&nbsp;&nbsp;&nbsp;
