@@ -1,6 +1,7 @@
 import React from 'react';
 import CartComponent from '../components/Cart';
 import '../App.css';
+import axios from 'axios';
 
 
 class Cart extends React.Component {
@@ -13,6 +14,40 @@ class Cart extends React.Component {
         unitTotalQty: 0,
         unitTotalPrice: 0
       };
+    }
+
+    placeOrder(price_total, units_total)
+    {
+       alert('I placed order!');
+
+       //Populate an orderArray containing objects with their respective order items
+       var orderArray = [];
+
+       var populateOrderItemsArray = this.props.cartData.cart.forEach( (item, index) =>
+       {
+            var orderObject = {product_id: item.id, quantity: item.units, price: item.price};
+            orderArray.push(orderObject);
+            return true;
+       });
+
+       //console.log(orderArray);
+
+       //Call the new order API to register order in the system
+       axios.post('/api/orders/register', {
+         user_id: 1,
+         quantity: units_total,
+         price: price_total,
+         orderArray
+       })
+       .then(function (response) {
+         console.log(response);
+       })
+       .catch(function (error) {
+         console.log(error);
+       });
+
+       //Refresh the page to clear the cart
+        window.location.reload(false);
     }
     
 
@@ -66,8 +101,9 @@ class Cart extends React.Component {
              <h3 className="text-right" style={{'marginRight':'22px'}}>Price Total: {priceTotal.toFixed(2)}$</h3>
              <h3 className="text-right" style={{'marginRight':'22px'}}>Total Units: {unitsTotal}</h3>
 
-             <button className="btn btn-success float-right" style={{width:'300px', 'marginRight':'22px'}} onClick={this.props.onClick}>Place Order</button>
-  
+            {unitsTotal > 0 &&
+             <button className="btn btn-success float-right" style={{width:'300px', 'marginRight':'22px'}} onClick={this.placeOrder.bind(this,priceTotal.toFixed(2), unitsTotal)}>Place Order</button>
+            }
                 
           </div>
        );
