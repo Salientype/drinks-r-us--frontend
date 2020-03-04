@@ -58,13 +58,17 @@ class Cart extends React.Component {
                   <div className="col">
                   </div>
                   <div className="col" style={{background:'#0066ff'}}>
-                     Total Price: {priceTotal}$
+                     Total Price: {priceTotal.toFixed(2)}$
                   </div>
                </div> 
              </ul>
 
-             <h3>Price Total: {priceTotal}</h3>
-             <h3>Total Units: {unitsTotal}</h3>
+             <h3 className="text-right" style={{'marginRight':'22px'}}>Price Total: {priceTotal.toFixed(2)}$</h3>
+             <h3 className="text-right" style={{'marginRight':'22px'}}>Total Units: {unitsTotal}</h3>
+
+             <button className="btn btn-success float-right" style={{width:'300px', 'marginRight':'22px'}} onClick={this.props.onClick}>Place Order</button>
+  
+                
           </div>
        );
     }

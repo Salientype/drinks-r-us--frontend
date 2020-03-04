@@ -31,6 +31,7 @@ class App extends React.Component {
 
     this.AddToCart=this.AddToCart.bind(this);
   }
+
   
   AddToCart(item){
 
@@ -68,6 +69,7 @@ class App extends React.Component {
     axios.get("/api/products/")
     .then( (response) => {
 
+      //console.log(response.data);
       this.setState({ products: response.data});
 
     }).catch((error) => {
