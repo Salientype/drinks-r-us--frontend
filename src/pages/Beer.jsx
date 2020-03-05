@@ -18,7 +18,7 @@ class Beer extends React.Component {
 
    componentDidMount() 
    {
-     axios.get("/api/products/type/1")
+     axios.get("/api/products/type/2")
      .then( (response) => {
  
        //console.log(response.data);
