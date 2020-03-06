@@ -7,7 +7,7 @@ class Cart extends React.Component {
        return (       
         <div className="row bg-info text-white">
         <div className="col">
-          SKU: {this.props.product}
+          SKU: {this.props.name}
         </div>
         <div className="col">
           Units: {this.props.units}&nbsp;&nbsp;&nbsp;
@@ -15,7 +15,10 @@ class Cart extends React.Component {
           <button type="button" className="btn btn-outline-warning bg-success">-</button>
         </div>
         <div className="col">
-          Price: {this.props.price}
+          Price Per Unit: {this.props.price}$
+        </div>
+        <div className="col">
+          Price: {this.props.price*this.props.units}$
         </div>
       </div>  
        );
