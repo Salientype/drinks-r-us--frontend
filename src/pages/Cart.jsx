@@ -18,27 +18,30 @@ class Cart extends React.Component {
 
     placeOrder(price_total, units_total)
     {
-       alert('I placed order!');
+       alert('Order Placed! Thank you and have a drunk night!');
 
        //Populate an orderArray containing objects with their respective order items
-       var orderArray = [];
+       let order_products = [];
 
-       var populateOrderItemsArray = this.props.cartData.cart.forEach( (item, index) =>
+       let populateOrderItemsArray = this.props.cartData.cart.forEach( (item, index) =>
        {
-            var orderObject = {product_id: item.id, quantity: item.units, price: item.price};
-            orderArray.push(orderObject);
+            let orderObject = {product_id: item.id, quantity: item.units, price: item.price};
+            order_products.push(orderObject);
             return true;
        });
 
        //console.log(orderArray);
+       order_products = JSON.stringify(order_products);
 
-       //Call the new order API to register order in the system
-       axios.post('/api/orders/register', {
+       let fullOrderObject = {
          user_id: 1,
          quantity: units_total,
          price: price_total,
-         orderArray
-       })
+         order_products
+       }
+
+       //Call the new order API to register order in the system
+       axios.post('/api/orders/register', fullOrderObject)
        .then(function (response) {
          console.log(response);
        })
