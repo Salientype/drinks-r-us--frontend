@@ -15,6 +15,7 @@ class Cart extends React.Component {
         unitTotalPrice: 0
       };
     }
+    
 
     placeOrder(price_total, units_total)
     {
